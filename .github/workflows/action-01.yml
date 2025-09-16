@@ -1,0 +1,12 @@
+name: 01 Workflow - Manual Trigger
+
+on: workflow_dispatch 
+
+jobs:
+  first_job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print Greeeting
+        run: echo: "Hello World"
+      - Name: Print Bye
+        run: echo "Goodbye"  
