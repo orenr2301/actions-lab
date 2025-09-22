@@ -22,4 +22,3 @@ jobs:
              echo "$GITHUB_EVENT_CONTEXT"
              echo "---------------------------------------"
              echo "$GITHUB_EVENT_REF"
-
