@@ -1,0 +1,72 @@
+name: On Push
+
+on:
+  push:
+    branches:
+      - task-01
+
+env:
+    NODE_VERSION: "lts/*"
+    PACKAGE_MANAGER: "npm"
+# x-runner: &ubuntu
+#     runs-on: ubuntu-latest
+
+jobs:
+    lint:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout Branch/Repository
+              uses: actions/checkout@v4
+            - name: Setup Node.js Environment
+              uses: actions/setup-node@v4
+              with:
+                node-version: ${{ env.NODE_VERSION }}
+                cache: ${{ env.PACKAGE_MANAGER }} 
+            - name: Install Dependencie
+              run: npm ci
+            - name: Lint
+              run: npm run lint
+              
+            # - run: |
+            #         npm ci && npm run lint
+            #         if [ $? -ne 0 ]; then
+            #           exit 1
+            #         else
+         #           echo " Linting passed Successfully
+    test:
+        runs-on: ubuntu-latest
+        needs: lint
+        steps:
+            - uses: actions/checkout@v4
+            - name: Setup Node.js Environment
+              uses: actions/setup-node@v4
+              with:
+                node-version: ${{ env.NODE_VERSION }}
+                cache: ${{ env.PACKAGE_MANAGER }}
+            - name: install Dependencies
+              run: npm ci
+            - name: Test Code
+              run: npm test
+
+    build:
+        runs-on: ubuntu-latest
+        needs: test
+        steps:
+            - name: Chceckout bRANCH/rEPOSITORY
+              uses: actions/checkout@v4
+            - name: Setup Node.js Envinronmnet
+              uses: actions/setup-node@v4
+              with:
+                node-version: ${{ env.NODE_VERSION }}
+                cache: ${{ env.PACKAGE_MANAGER }}
+            - name: Instatll Dependencies
+              run: npm ci
+            - name: Build Project
+              run: npm run build
+    
+
+   
+
+        
+              
+
