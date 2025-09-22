@@ -9,7 +9,6 @@ on:
 
 jobs:
   eventDetails:
-    name: Print Event Details
     runs-on: ubuntu-latest
     steps:
         - name: dump Github Context
